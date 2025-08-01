@@ -61,8 +61,8 @@ class curl extends Extension
     public function patchBeforeMake(): bool
     {
         $patched = parent::patchBeforeMake();
-        $extra_libs = getenv('SPC_EXTRA_LIBS');
-        var_dump( $extra_libs);
+        $extra_libs = getenv('SPC_EXTRA_LIBS') ?: '';
+        
         if ($this->builder instanceof WindowsBuilder && !str_contains($extra_libs, 'secur32.lib')) {
             $extra_libs .= ' secur32.lib';
             putenv('SPC_EXTRA_LIBS=' . trim($extra_libs));
